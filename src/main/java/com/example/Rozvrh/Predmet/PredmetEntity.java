@@ -1,14 +1,18 @@
 package com.example.Rozvrh.Predmet;
 
-public class Predmet {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-    public long id;
+@Entity
+public class PredmetEntity {
+    @Id
+    @GeneratedValue
+    private Long id;
+
     private String nazovPredmetu;
     private boolean potrebujePocitace;
     private TypPredmetu typPredmetu;
-    public Predmet() {
-    }
-
     public TypPredmetu getTypPredmetu() {
         return typPredmetu;
     }
@@ -40,4 +44,5 @@ public class Predmet {
     public void setPotrebujePocitace(boolean potrebujePocitace) {
         this.potrebujePocitace = potrebujePocitace;
     }
+
 }

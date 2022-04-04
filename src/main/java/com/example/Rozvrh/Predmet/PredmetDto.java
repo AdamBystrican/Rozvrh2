@@ -1,14 +1,9 @@
 package com.example.Rozvrh.Predmet;
 
-public class Predmet {
-
-    public long id;
+public class PredmetDto {
     private String nazovPredmetu;
     private boolean potrebujePocitace;
     private TypPredmetu typPredmetu;
-    public Predmet() {
-    }
-
     public TypPredmetu getTypPredmetu() {
         return typPredmetu;
     }
@@ -17,20 +12,12 @@ public class Predmet {
         this.typPredmetu = typPredmetu;
     }
 
-    public long getId() {
-        return id;
-    }
-
     public String getNazovPredmetu() {
         return nazovPredmetu;
     }
 
     public boolean isPotrebujePocitace() {
         return potrebujePocitace;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public void setNazovPredmetu(String nazovPredmetu) {
