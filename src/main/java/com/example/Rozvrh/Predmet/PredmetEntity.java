@@ -13,7 +13,7 @@ public class PredmetEntity {
     private String nazovPredmetu;
     private boolean potrebujePocitace;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -25,7 +25,7 @@ public class PredmetEntity {
         return potrebujePocitace;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

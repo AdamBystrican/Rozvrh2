@@ -2,14 +2,14 @@ package com.example.Rozvrh.Predmet;
 
 public class Predmet {
 
-    public long id;
+    public Long id;
     private String nazovPredmetu;
     private boolean potrebujePocitace;
     public Predmet() {
     }
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -21,7 +21,7 @@ public class Predmet {
         return potrebujePocitace;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
