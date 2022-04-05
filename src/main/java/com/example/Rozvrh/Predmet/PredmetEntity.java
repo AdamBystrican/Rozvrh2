@@ -12,6 +12,15 @@ public class PredmetEntity {
 
     private String nazovPredmetu;
     private boolean potrebujePocitace;
+    private TypPredmetu typPredmetu;
+
+    public TypPredmetu getTypPredmetu() {
+        return typPredmetu;
+    }
+
+    public void setTypPredmetu(TypPredmetu typPredmetu) {
+        this.typPredmetu = typPredmetu;
+    }
 
     public Long getId() {
         return id;
