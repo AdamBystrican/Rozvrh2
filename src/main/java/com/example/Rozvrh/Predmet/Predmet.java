@@ -5,17 +5,9 @@ public class Predmet {
     public long id;
     private String nazovPredmetu;
     private boolean potrebujePocitace;
-    private TypPredmetu typPredmetu;
     public Predmet() {
     }
 
-    public TypPredmetu getTypPredmetu() {
-        return typPredmetu;
-    }
-
-    public void setTypPredmetu(TypPredmetu typPredmetu) {
-        this.typPredmetu = typPredmetu;
-    }
 
     public long getId() {
         return id;

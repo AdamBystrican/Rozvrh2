@@ -20,7 +20,6 @@ public class PredmetService {
         PredmetDto predmetDto = new PredmetDto();
         predmetDto.setNazovPredmetu(predmetEntity.getNazovPredmetu());
         predmetDto.setPotrebujePocitace(predmetEntity.isPotrebujePocitace());
-        predmetDto.setTypPredmetu(predmetEntity.getTypPredmetu());
         return predmetDto;
     }
 
@@ -29,7 +28,6 @@ public class PredmetService {
         PredmetEntity pe = new PredmetEntity();
         pe.setNazovPredmetu(predmetDto.getNazovPredmetu());
         pe.setPotrebujePocitace(predmetDto.isPotrebujePocitace());
-        pe.setTypPredmetu(predmetDto.getTypPredmetu());
         this.predmetRepository.save(pe);
         return pe.getId();
     }
@@ -59,7 +57,6 @@ public class PredmetService {
         if(byId.isPresent()){
             byId.get().setNazovPredmetu(predmetDto.getNazovPredmetu());
             byId.get().setPotrebujePocitace(predmetDto.isPotrebujePocitace());
-            byId.get().setTypPredmetu(predmetDto.getTypPredmetu());
         }
    }
     @Transactional
