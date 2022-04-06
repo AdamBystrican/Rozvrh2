@@ -6,6 +6,15 @@ public class Predmet {
     private String nazovPredmetu;
     private boolean potrebujePocitace;
     private TypPredmetu typPredmetu;
+    private int rocnik;
+
+    public int getRocnik() {
+        return rocnik;
+    }
+
+    public void setRocnik(int rocnik) {
+        this.rocnik = rocnik;
+    }
 
     public TypPredmetu getTypPredmetu() {
         return typPredmetu;

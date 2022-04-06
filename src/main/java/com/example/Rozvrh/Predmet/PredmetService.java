@@ -21,6 +21,7 @@ public class PredmetService {
         predmetDto.setNazovPredmetu(predmetEntity.getNazovPredmetu());
         predmetDto.setPotrebujePocitace(predmetEntity.isPotrebujePocitace());
         predmetDto.setTypPredmetu(predmetEntity.getTypPredmetu());
+        predmetDto.setRocnik(predmetEntity.getRocnik());
         return predmetDto;
     }
 
@@ -30,6 +31,7 @@ public class PredmetService {
         pe.setNazovPredmetu(predmetDto.getNazovPredmetu());
         pe.setPotrebujePocitace(predmetDto.isPotrebujePocitace());
         pe.setTypPredmetu(predmetDto.getTypPredmetu());
+        pe.setRocnik(predmetDto.getRocnik());
         this.predmetRepository.save(pe);
         return pe.getId();
     }
@@ -59,6 +61,8 @@ public class PredmetService {
         if(byId.isPresent()){
             byId.get().setNazovPredmetu(predmetDto.getNazovPredmetu());
             byId.get().setPotrebujePocitace(predmetDto.isPotrebujePocitace());
+            byId.get().setTypPredmetu(predmetDto.getTypPredmetu());
+            byId.get().setRocnik(predmetDto.getRocnik());
         }
    }
     @Transactional
