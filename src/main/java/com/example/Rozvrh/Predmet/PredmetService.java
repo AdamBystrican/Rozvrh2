@@ -66,11 +66,8 @@ public class PredmetService {
         }
    }
     @Transactional
-    public void delete(int predmetId){
-        Optional<PredmetEntity> byId = predmetRepository.findById((long)predmetId);
-        if(byId.isPresent()){
-            predmetRepository.delete(byId.get());
-        }
+    public void delete(Long predmetId){
+        predmetRepository.deleteById(predmetId);
     }
 
 

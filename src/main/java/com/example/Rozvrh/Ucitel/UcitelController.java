@@ -30,7 +30,7 @@ public class UcitelController {
         ucitelService.updateUcitel(ucitelId,ucitelDto);
     }
     @DeleteMapping("/{ucitelId}")
-    public void deleteUcitel(@PathVariable int ucitelId){
+    public void deleteUcitel(@PathVariable Long ucitelId){
         ucitelService.deleteUcitel(ucitelId);
     }
 }

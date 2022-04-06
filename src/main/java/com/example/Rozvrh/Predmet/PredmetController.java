@@ -30,7 +30,7 @@ public class PredmetController {
         predmetService.updatePredmet(predmetId,predmetDto);
     }
     @DeleteMapping("/{predmetId}")
-    public void deletePredmet(@PathVariable int predmetId){
+    public void deletePredmet(@PathVariable Long predmetId){
         predmetService.delete(predmetId);
     }
 }

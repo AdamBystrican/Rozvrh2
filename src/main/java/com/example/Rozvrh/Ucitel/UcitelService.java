@@ -63,10 +63,7 @@ public class UcitelService {
     }
 
     @Transactional
-    public void deleteUcitel(int ucitelId){
-        Optional<UcitelEntity> byId = ucitelRpository.findById((long)ucitelId);
-        if(byId.isPresent()){
-            ucitelRpository.delete(byId.get());
-        }
+    public void deleteUcitel(Long ucitelId){
+        ucitelRpository.deleteById(ucitelId);
     }
 }

@@ -1,10 +1,13 @@
 package com.example.Rozvrh.Predmet;
 
+import javax.persistence.Enumerated;
+
 public class Predmet {
 
     public Long id;
     private String nazovPredmetu;
     private boolean potrebujePocitace;
+    //@Enumerated
     private TypPredmetu typPredmetu;
     private int rocnik;
 
