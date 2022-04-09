@@ -1,31 +1,31 @@
 package com.example.Rozvrh.Ucitel;
 
 public class UcitelDto {
-    private String meno;
-    private String priezvisko;
-    private String kontakt;
+    private String firstName;
+    private String lastName;
+    private String contact;
 
-    public void setMeno(String meno) {
-        this.meno = meno;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setPriezvisko(String priezvisko) {
-        this.priezvisko = priezvisko;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public void setKontakt(String kontakt) {
-        this.kontakt = kontakt;
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
-    public String getMeno() {
-        return meno;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getPriezvisko() {
-        return priezvisko;
+    public String getLastName() {
+        return lastName;
     }
 
-    public String getKontakt() {
-        return kontakt;
+    public String getContact() {
+        return contact;
     }
 }

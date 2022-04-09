@@ -1,40 +1,32 @@
 package com.example.Rozvrh.Predmet;
 
 public class PredmetDto {
-    private String nazovPredmetu;
-    private boolean potrebujePocitace;
-    private TypPredmetu typPredmetu;
-    private int rocnik;
+    private String name;
+    private boolean computersRequired;
+    private String type;
 
-    public int getRocnik() {
-        return rocnik;
+
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setRocnik(int rocnik) {
-        this.rocnik = rocnik;
+    public void setComputersRequired(boolean computersRequired) {
+        this.computersRequired = computersRequired;
     }
 
-    public TypPredmetu getTypPredmetu() {
-        return typPredmetu;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public void setTypPredmetu(TypPredmetu typPredmetu) {
-        this.typPredmetu = typPredmetu;
+    public String getName() {
+        return name;
     }
 
-    public String getNazovPredmetu() {
-        return nazovPredmetu;
+    public boolean isComputersRequired() {
+        return computersRequired;
     }
 
-    public boolean isPotrebujePocitace() {
-        return potrebujePocitace;
-    }
-
-    public void setNazovPredmetu(String nazovPredmetu) {
-        this.nazovPredmetu = nazovPredmetu;
-    }
-
-    public void setPotrebujePocitace(boolean potrebujePocitace) {
-        this.potrebujePocitace = potrebujePocitace;
+    public String getType() {
+        return type;
     }
 }

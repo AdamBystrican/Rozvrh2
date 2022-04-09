@@ -10,49 +10,43 @@ public class PredmetEntity {
     @GeneratedValue
     private Long id;
 
-    private String nazovPredmetu;
-    private boolean potrebujePocitace;
-    private TypPredmetu typPredmetu;
-    private int rocnik;
+    private String name;
+    private boolean computersRequired;
+    //@Enumerated
+    private String type;
 
-    public int getRocnik() {
-        return rocnik;
+
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setRocnik(int rocnik) {
-        this.rocnik = rocnik;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public TypPredmetu getTypPredmetu() {
-        return typPredmetu;
+    public void setComputersRequired(boolean computersRequired) {
+        this.computersRequired = computersRequired;
     }
 
-    public void setTypPredmetu(TypPredmetu typPredmetu) {
-        this.typPredmetu = typPredmetu;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getNazovPredmetu() {
-        return nazovPredmetu;
+    public String getName() {
+        return name;
     }
 
-    public boolean isPotrebujePocitace() {
-        return potrebujePocitace;
+    public boolean isComputersRequired() {
+        return computersRequired;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setNazovPredmetu(String nazovPredmetu) {
-        this.nazovPredmetu = nazovPredmetu;
-    }
-
-    public void setPotrebujePocitace(boolean potrebujePocitace) {
-        this.potrebujePocitace = potrebujePocitace;
+    public String getType() {
+        return type;
     }
 
 }

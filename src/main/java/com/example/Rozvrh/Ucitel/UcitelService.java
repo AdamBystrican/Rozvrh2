@@ -17,18 +17,18 @@ public class UcitelService {
 
     private static UcitelDto mapToUcitelDto(UcitelEntity ucitelEntity){
         UcitelDto ucitelDto = new UcitelDto();
-        ucitelDto.setMeno(ucitelEntity.getMeno());
-        ucitelDto.setPriezvisko(ucitelEntity.getPriezvisko());
-        ucitelDto.setKontakt(ucitelEntity.getKontakt());
+        ucitelDto.setFirstName(ucitelEntity.getFirstName());
+        ucitelDto.setLastName(ucitelEntity.getLastName());
+        ucitelDto.setContact(ucitelEntity.getContact());
         return ucitelDto;
     }
 
     @Transactional
     public Long createUcitel(UcitelDto ucitelDto){
         UcitelEntity ue = new UcitelEntity();
-        ue.setMeno(ucitelDto.getMeno());
-        ue.setPriezvisko(ucitelDto.getPriezvisko());
-        ue.setKontakt(ucitelDto.getKontakt());
+        ue.setFirstName(ucitelDto.getFirstName());
+        ue.setLastName(ucitelDto.getLastName());
+        ue.setContact(ucitelDto.getContact());
         this.ucitelRpository.save(ue);
         return ue.getId();
     }
@@ -56,9 +56,9 @@ public class UcitelService {
     public void updateUcitel(int ucitelId, UcitelDto ucitelDto){
         Optional<UcitelEntity> byId = ucitelRpository.findById((long)ucitelId);
         if(byId.isPresent()){
-            byId.get().setMeno(ucitelDto.getMeno());
-            byId.get().setPriezvisko(ucitelDto.getPriezvisko());
-            byId.get().setKontakt(ucitelDto.getKontakt());
+            byId.get().setFirstName(ucitelDto.getFirstName());
+            byId.get().setLastName(ucitelDto.getLastName());
+            byId.get().setContact(ucitelDto.getContact());
         }
     }
 

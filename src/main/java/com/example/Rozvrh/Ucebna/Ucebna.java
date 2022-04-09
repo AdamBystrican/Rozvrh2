@@ -2,42 +2,41 @@ package com.example.Rozvrh.Ucebna;
 
 public class Ucebna {
     public Long id;
-    String nazov;
-    boolean maPocitace;
-    String adresa;
-
-    public String getAdresa() {
-        return adresa;
-    }
-
-    public void setAdresa(String adresa) {
-        this.adresa = adresa;
-    }
+    String name;
+    boolean computersProviding;
+    String address;
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setNazov(String nazov) {
-        this.nazov = nazov;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setMaPocitace(boolean maPocitace) {
-        this.maPocitace = maPocitace;
+    public void setComputersProviding(boolean computersProviding) {
+        this.computersProviding = computersProviding;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getNazov() {
-        return nazov;
+    public String getName() {
+        return name;
     }
 
-    public boolean isMaPocitace() {
-        return maPocitace;
+    public boolean isComputersProviding() {
+        return computersProviding;
     }
 
+    public String getAddress() {
+        return address;
+    }
 
     public Ucebna() {
     }

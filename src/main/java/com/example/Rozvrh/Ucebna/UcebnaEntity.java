@@ -9,39 +9,39 @@ public class UcebnaEntity {
     @Id
     @GeneratedValue
     public Long id;
-    String nazov;
-    boolean maPocitace;
-    String adresa;
+    String name;
+    boolean computersProviding;
+    String address;
 
-    public String getAdresa() {
-        return adresa;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setAdresa(String adresa) {
-        this.adresa = adresa;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setComputersProviding(boolean computersProviding) {
+        this.computersProviding = computersProviding;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getName() {
+        return name;
     }
 
-    public void setNazov(String nazov) {
-        this.nazov = nazov;
+    public boolean isComputersProviding() {
+        return computersProviding;
     }
 
-    public void setMaPocitace(boolean maPocitace) {
-        this.maPocitace = maPocitace;
-    }
-
-    public String getNazov() {
-        return nazov;
-    }
-
-    public boolean isMaPocitace() {
-        return maPocitace;
+    public String getAddress() {
+        return address;
     }
 }

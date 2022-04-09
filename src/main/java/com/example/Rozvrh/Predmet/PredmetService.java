@@ -18,20 +18,18 @@ public class PredmetService {
 
     private static PredmetDto mapToPredmetDto(PredmetEntity predmetEntity){
         PredmetDto predmetDto = new PredmetDto();
-        predmetDto.setNazovPredmetu(predmetEntity.getNazovPredmetu());
-        predmetDto.setPotrebujePocitace(predmetEntity.isPotrebujePocitace());
-        predmetDto.setTypPredmetu(predmetEntity.getTypPredmetu());
-        predmetDto.setRocnik(predmetEntity.getRocnik());
+        predmetDto.setName(predmetEntity.getName());
+        predmetDto.setComputersRequired(predmetEntity.isComputersRequired());
+        predmetDto.setType(predmetEntity.getType());
         return predmetDto;
     }
 
     @Transactional
     public Long createPredmet(PredmetDto predmetDto){
         PredmetEntity pe = new PredmetEntity();
-        pe.setNazovPredmetu(predmetDto.getNazovPredmetu());
-        pe.setPotrebujePocitace(predmetDto.isPotrebujePocitace());
-        pe.setTypPredmetu(predmetDto.getTypPredmetu());
-        pe.setRocnik(predmetDto.getRocnik());
+        pe.setName(predmetDto.getName());
+        pe.setComputersRequired(predmetDto.isComputersRequired());
+        pe.setType(predmetDto.getType());
         this.predmetRepository.save(pe);
         return pe.getId();
     }
@@ -59,10 +57,9 @@ public class PredmetService {
    public void updatePredmet(int predmetId, PredmetDto predmetDto){
         Optional<PredmetEntity> byId = predmetRepository.findById((long)predmetId);
         if(byId.isPresent()){
-            byId.get().setNazovPredmetu(predmetDto.getNazovPredmetu());
-            byId.get().setPotrebujePocitace(predmetDto.isPotrebujePocitace());
-            byId.get().setTypPredmetu(predmetDto.getTypPredmetu());
-            byId.get().setRocnik(predmetDto.getRocnik());
+            byId.get().setName(predmetDto.getName());
+            byId.get().setComputersRequired(predmetDto.isComputersRequired());
+            byId.get().setType(predmetDto.getType());
         }
    }
     @Transactional

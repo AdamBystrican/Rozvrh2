@@ -17,18 +17,18 @@ public class UcebnaService {
 
     private static UcebnaDto mapToUcebnaDto(UcebnaEntity ucebnaEntity){
         UcebnaDto ucebnaDto = new UcebnaDto();
-        ucebnaDto.setNazov(ucebnaEntity.getNazov());
-        ucebnaDto.setMaPocitace(ucebnaEntity.isMaPocitace());
-        ucebnaDto.setAdresa(ucebnaEntity.getAdresa());
+        ucebnaDto.setName(ucebnaEntity.getName());
+        ucebnaDto.setComputersProviding(ucebnaEntity.isComputersProviding());
+        ucebnaDto.setAddress(ucebnaEntity.getAddress());
         return ucebnaDto;
     }
 
     @Transactional
     public Long createUcebna(UcebnaDto ucebnaDto){
         UcebnaEntity ue = new UcebnaEntity();
-        ue.setNazov(ucebnaDto.getNazov());
-        ue.setMaPocitace(ucebnaDto.isMaPocitace());
-        ue.setAdresa(ucebnaDto.getAdresa());
+        ue.setName(ucebnaDto.getName());
+        ue.setComputersProviding(ucebnaDto.isComputersProviding());
+        ue.setAddress(ucebnaDto.getAddress());
         ucebnaRepository.save(ue);
         return ue.getId();
     }
@@ -55,9 +55,9 @@ public class UcebnaService {
     public void updateUcebna(Long ucebnaId, UcebnaDto ucebnaDto){
         Optional<UcebnaEntity> byId = ucebnaRepository.findById(ucebnaId);
         if(byId.isPresent()){
-            byId.get().setNazov(ucebnaDto.getNazov());
-            byId.get().setMaPocitace(ucebnaDto.isMaPocitace());
-            byId.get().setAdresa(ucebnaDto.getAdresa());
+            byId.get().setName(ucebnaDto.getName());
+            byId.get().setComputersProviding(ucebnaDto.isComputersProviding());
+            byId.get().setAddress(ucebnaDto.getAddress());
         }
     }
 

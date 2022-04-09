@@ -5,53 +5,43 @@ import javax.persistence.Enumerated;
 public class Predmet {
 
     public Long id;
-    private String nazovPredmetu;
-    private boolean potrebujePocitace;
+    private String name;
+    private boolean computersRequired;
     //@Enumerated
-    private TypPredmetu typPredmetu;
-    private int rocnik;
-
-    public int getRocnik() {
-        return rocnik;
-    }
-
-    public void setRocnik(int rocnik) {
-        this.rocnik = rocnik;
-    }
-
-    public TypPredmetu getTypPredmetu() {
-        return typPredmetu;
-    }
-
-    public void setTypPredmetu(TypPredmetu typPredmetu) {
-        this.typPredmetu = typPredmetu;
-    }
+    private String type;
 
     public Predmet() {
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getNazovPredmetu() {
-        return nazovPredmetu;
-    }
-
-    public boolean isPotrebujePocitace() {
-        return potrebujePocitace;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setNazovPredmetu(String nazovPredmetu) {
-        this.nazovPredmetu = nazovPredmetu;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setPotrebujePocitace(boolean potrebujePocitace) {
-        this.potrebujePocitace = potrebujePocitace;
+    public void setComputersRequired(boolean computersRequired) {
+        this.computersRequired = computersRequired;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean isComputersRequired() {
+        return computersRequired;
+    }
+
+    public String getType() {
+        return type;
     }
 }
