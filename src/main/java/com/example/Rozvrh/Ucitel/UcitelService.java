@@ -20,6 +20,7 @@ public class UcitelService {
         ucitelDto.setFirstName(ucitelEntity.getFirstName());
         ucitelDto.setLastName(ucitelEntity.getLastName());
         ucitelDto.setContact(ucitelEntity.getContact());
+        ucitelDto.setId(ucitelEntity.getId());
         return ucitelDto;
     }
 

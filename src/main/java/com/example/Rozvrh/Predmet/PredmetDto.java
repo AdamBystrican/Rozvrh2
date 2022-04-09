@@ -1,10 +1,18 @@
 package com.example.Rozvrh.Predmet;
 
 public class PredmetDto {
+    private Long id;
     private String name;
     private boolean computersRequired;
     private String type;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public void setName(String name) {
         this.name = name;

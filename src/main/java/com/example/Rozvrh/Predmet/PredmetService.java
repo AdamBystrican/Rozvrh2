@@ -21,6 +21,7 @@ public class PredmetService {
         predmetDto.setName(predmetEntity.getName());
         predmetDto.setComputersRequired(predmetEntity.isComputersRequired());
         predmetDto.setType(predmetEntity.getType());
+        predmetDto.setId(predmetEntity.getId());
         return predmetDto;
     }
 

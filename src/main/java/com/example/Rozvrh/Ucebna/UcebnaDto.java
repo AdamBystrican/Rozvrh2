@@ -1,9 +1,18 @@
 package com.example.Rozvrh.Ucebna;
 
 public class UcebnaDto {
-    String name;
+    private String name;
     boolean computersProviding;
-    String address;
+    private String address;
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public void setName(String name) {
         this.name = name;

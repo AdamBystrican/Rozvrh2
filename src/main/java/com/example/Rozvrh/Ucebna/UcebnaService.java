@@ -20,6 +20,7 @@ public class UcebnaService {
         ucebnaDto.setName(ucebnaEntity.getName());
         ucebnaDto.setComputersProviding(ucebnaEntity.isComputersProviding());
         ucebnaDto.setAddress(ucebnaEntity.getAddress());
+        ucebnaDto.setId(ucebnaEntity.getId());
         return ucebnaDto;
     }
 
