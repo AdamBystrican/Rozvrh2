@@ -7,7 +7,6 @@ public class Predmet {
     public Long id;
     private String name;
     private boolean computersRequired;
-    //@Enumerated
     private String type;
 
     public Predmet() {
