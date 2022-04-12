@@ -6,6 +6,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/predmety")
+@CrossOrigin(origins = {"http://localhost:4200"})
 public class PredmetController {
     private PredmetService predmetService;
 
