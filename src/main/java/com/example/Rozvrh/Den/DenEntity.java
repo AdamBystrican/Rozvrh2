@@ -3,6 +3,7 @@ package com.example.Rozvrh.Den;
 import com.example.Rozvrh.Cas.Cas;
 
 import javax.persistence.Entity;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,8 +20,11 @@ public class DenEntity {
         this.nazov = nazov;
     }
 
-    public void setCas(List<Cas> cas) {
-        this.cas = cas;
+    public void setCas(int zacHod, int zacMin, int konHod, int konMin) {
+        if(this.cas == null)
+            this.cas = new ArrayList<>();
+        Cas pomCas = new Cas(zacHod,zacMin,konHod,konMin);
+        this.cas.add(pomCas);
     }
 
     public Long getId() {
@@ -35,3 +39,4 @@ public class DenEntity {
         return cas;
     }
 }
+

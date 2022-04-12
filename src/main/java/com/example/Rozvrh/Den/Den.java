@@ -21,8 +21,11 @@ public class Den {
         this.nazov = nazov;
     }
 
-    public void setCas(List<Cas> cas) {
-        this.cas = cas;
+    public void setCas(int zacHod, int zacMin, int konHod, int konMin) {
+        if(this.cas == null)
+            this.cas = new ArrayList<>();
+        Cas pomCas = new Cas(zacHod,zacMin,konHod,konMin);
+        this.cas.add(pomCas);
     }
 
     public Long getId() {

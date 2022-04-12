@@ -1,29 +1,48 @@
 package com.example.Rozvrh.Cas;
 
-import java.sql.Time;
-import java.time.LocalTime;
+
 public class Cas {
-    private Time zaciatok;
-    private Time koniec;
+    private int zacHod;
+    private int zacMin;
+    private int konHod;
+    private int konMin;
 
-    public Time getZaciatok() {
-        return zaciatok;
+    public Cas(int zacHod, int zacMin, int konHod, int konMin) {
+        this.zacHod = zacHod;
+        this.zacMin = zacMin;
+        this.konHod = konHod;
+        this.konMin = konMin;
     }
 
-    public Time getKoniec() {
-        return koniec;
+    public void setZacHod(int zacHod) {
+        this.zacHod = zacHod;
     }
 
-    public void setZaciatok(Time zaciatok) {
-        this.zaciatok = zaciatok;
+    public void setZacMin(int zacMin) {
+        this.zacMin = zacMin;
     }
 
-    public void setKoniec(Time koniec) {
-        this.koniec = koniec;
+    public void setKonHod(int konHod) {
+        this.konHod = konHod;
     }
 
-    public Cas(String zaciatok, String koniec) {
-        this.zaciatok.valueOf(zaciatok);
-        this.koniec.valueOf(koniec);
+    public void setKonMin(int konMin) {
+        this.konMin = konMin;
+    }
+
+    public int getZacHod() {
+        return zacHod;
+    }
+
+    public int getZacMin() {
+        return zacMin;
+    }
+
+    public int getKonHod() {
+        return konHod;
+    }
+
+    public int getKonMin() {
+        return konMin;
     }
 }
