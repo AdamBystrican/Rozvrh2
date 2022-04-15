@@ -1,6 +1,5 @@
 package com.example.Rozvrh.Predmet;
 
-import javax.persistence.Enumerated;
 
 public class Predmet {
 

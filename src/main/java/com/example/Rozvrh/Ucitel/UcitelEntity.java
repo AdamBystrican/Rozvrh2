@@ -13,6 +13,10 @@ public class UcitelEntity {
     private String lastName;
     private String contact;
 
+    public String getFullName(){
+        return firstName + " " + lastName;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
