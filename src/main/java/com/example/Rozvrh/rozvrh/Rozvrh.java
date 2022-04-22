@@ -15,7 +15,8 @@ public class Rozvrh {
     private Predmet predmet;
     private Ucitel  ucitel;
     private Ucebna  ucebna;
-    private Den den;
+    private int den;
+    private String trieda;
     private LocalTime start;
     private LocalTime finish;
 

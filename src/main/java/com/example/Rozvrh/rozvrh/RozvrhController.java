@@ -24,6 +24,11 @@ public class RozvrhController {
     public RozvrhDto getRozvrh(@PathVariable Long rozvrhId){
         return rozvrhService.getRozvrh(rozvrhId);
     }
+
+    /*@GetMapping("/{denId}")
+    public List<RozvrhDto> getRozvrhDna(@PathVariable int denId){
+        return rozvrhService.getRozvrhDna(denId);
+    }*/
     @PutMapping("/{rozvrhId}")
     public void updateRozvrh(@PathVariable Long rozvrhId, @RequestBody RozvrhDto rozvrhDto){
         rozvrhService.updateRozvrh(rozvrhDto,rozvrhId);

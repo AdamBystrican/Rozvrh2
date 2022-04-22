@@ -12,7 +12,8 @@ public class RozvrhDto {
     String predmet;
     String ucitel;
     String ucebna;
-    private Den den;
+    private int den;
+    private String trieda;
     private LocalTime start;
     private LocalTime finish;
 
@@ -21,15 +22,23 @@ public class RozvrhDto {
             return false;
         return true;
     }
-    /*
+
     public boolean kontrolaCasu(LocalTime start, LocalTime finish){
-        if(start.isBefore(this.start) && finish.isBefore(this.start))
+        if(this.finish.isBefore(start))
             return true;
-        if(start.isAfter(this.finish))
+        if(this.start.isAfter(finish))
             return true;
         return false;
-    }*/
+    }
 
+
+    public String getTrieda() {
+        return trieda;
+    }
+
+    public void setTrieda(String trieda) {
+        this.trieda = trieda;
+    }
 
     public void setPredmetId(Long predmetId) {
         this.predmetId = predmetId;
@@ -63,11 +72,11 @@ public class RozvrhDto {
         this.id = id;
     }
 
-    public Den getDen() {
+    public int getDen() {
         return den;
     }
 
-    public void setDen(Den den) {
+    public void setDen(int den) {
         this.den = den;
     }
 

@@ -33,7 +33,11 @@ public class RozvrhService {
         rozvrhDto.setUcitel(rozvrhEntity.getUcitel().getFullName());
         rozvrhDto.setPredmet(rozvrhEntity.getPredmet().getName());
         rozvrhDto.setUcebna(rozvrhEntity.getUcebna().getName());
+        rozvrhDto.setUcitelId(rozvrhEntity.getUcitel().getId());
+        rozvrhDto.setPredmetId(rozvrhEntity.getPredmet().getId());
+        rozvrhDto.setUcebnaId(rozvrhEntity.getUcebna().getId());
         rozvrhDto.setDen(rozvrhEntity.getDen());
+        rozvrhDto.setTrieda(rozvrhEntity.getTrieda());
         rozvrhDto.setStart(rozvrhEntity.getStart());
         rozvrhDto.setFinish(rozvrhEntity.getFinish());
         rozvrhDto.setId(rozvrhEntity.getId());
@@ -43,29 +47,34 @@ public class RozvrhService {
 
     @Transactional
     public Long createRozvrh(RozvrhDto rozvrhDto){
-        if(!(rozvrhDto.kontrolaStartEnd()))
-            throw new RuntimeException("zle zadany cas");
-        // vytvorim si list dam donho rozvrh dna a  ak sa prvok listu.getucitelid = rozvrhdto.getucitelid,
-        // tak zavolam kontrolu casu a to iste pre ucebnu.
-        RozvrhEntity re = new RozvrhEntity();
-        Optional<UcitelEntity> ucitelById = ucitelRpository.findById(rozvrhDto.getUcitelId());
-        if(ucitelById.isPresent()){
-            re.setUcitel(ucitelById.get());
-        }
-        Optional<UcebnaEntity> ucebnaById = ucebnaRepository.findById(rozvrhDto.getUcebnaId());
-        if(ucebnaById.isPresent()){
-            re.setUcebna(ucebnaById.get());
-        }
-        Optional<PredmetEntity> predmetById = predmetRepository.findById(rozvrhDto.getPredmetId());
-        if(predmetById.isPresent()){
-            re.setPredmet(predmetById.get());
-        }
-        re.setDen(rozvrhDto.getDen());
-        re.setStart(rozvrhDto.getStart());
-        re.setFinish(rozvrhDto.getFinish());
+        //kontrola, či je zadaný čas správne, a či učiteľ, trieda, alebo učebňa nie sú v danom čase obsadené
+        kontrolaRozvrhu(rozvrhDto);
 
-        this.rozvrhRepository.save(re);
-        return re.getId();
+            RozvrhEntity re = new RozvrhEntity();
+            //priraďovanie id pre učiteľa, predmet a učebňu, ak sa id v databáze nenachádza, vypíše sa chyba, aby sa nepridali
+            // do databázy id s null
+            Optional<UcitelEntity> ucitelById = ucitelRpository.findById(rozvrhDto.getUcitelId());
+            if (ucitelById.isPresent()) {
+                re.setUcitel(ucitelById.get());
+            } else throw new RuntimeException("zadané id pre učiteľa neexistuje");
+
+            Optional<UcebnaEntity> ucebnaById = ucebnaRepository.findById(rozvrhDto.getUcebnaId());
+            if (ucebnaById.isPresent()) {
+                re.setUcebna(ucebnaById.get());
+            } else throw new RuntimeException("zadané id pre učebňu neexistuje");
+
+            Optional<PredmetEntity> predmetById = predmetRepository.findById(rozvrhDto.getPredmetId());
+            if (predmetById.isPresent()) {
+                re.setPredmet(predmetById.get());
+            } else throw new RuntimeException("zadané id pre predmet neexistuje");
+
+            re.setDen(rozvrhDto.getDen());
+            re.setTrieda(rozvrhDto.getTrieda());
+            re.setStart(rozvrhDto.getStart());
+            re.setFinish(rozvrhDto.getFinish());
+
+            this.rozvrhRepository.save(re);
+            return re.getId();
     }
 
     @Transactional
@@ -95,9 +104,8 @@ public class RozvrhService {
     }
     @Transactional
     public void updateRozvrh(RozvrhDto rozvrhDto,Long rozvrhId){
-        if(!(rozvrhDto.kontrolaStartEnd()))
-            throw new RuntimeException("zle zadany cas");
-
+        //kontrola, či je zadaný čas správne, a či učiteľ, trieda, alebo učebňa nie sú v danom čase obsadené
+        kontrolaRozvrhu(rozvrhDto);
         Optional<RozvrhEntity> re = rozvrhRepository.findById(rozvrhId);
         if(re.isPresent()){
             Optional<UcitelEntity> ucitelById = ucitelRpository.findById(rozvrhDto.getUcitelId());
@@ -113,22 +121,96 @@ public class RozvrhService {
                 re.get().setPredmet(predmetById.get());
             }
             re.get().setDen(rozvrhDto.getDen());
+            re.get().setTrieda(rozvrhDto.getTrieda());
             re.get().setStart(rozvrhDto.getStart());
             re.get().setFinish(rozvrhDto.getFinish());
         }
+
     }
     @Transactional
     public void deleteRozvrh(Long rozvrhId){
         rozvrhRepository.deleteById(rozvrhId);
     }
 
-    public List<RozvrhDto> getRozvrhDna(Den den){
+
+    //funkcia vráti zoznam všetkých blokov v rozvrhu pre deň, ktorý je zadaný ako parameter funkcie
+    @Transactional
+    public List<RozvrhDto> getRozvrhDna(int den){
         List<RozvrhDto> ret = new LinkedList<>();
         for(RozvrhEntity r1 : rozvrhRepository.findAll()){
             RozvrhDto r2 = mapToRozvrhDto(r1);
-            if(r2.getDen()== den)
+            if(r2.getDen() == den)
                 ret.add(r2);
         }
         return ret;
     }
+    /*
+    //funkcia vráti zoznam všetkých blokov v rozvrhu pre učebňu, ktorej id je zadané ako parameter funkcie
+    @Transactional
+    public List<RozvrhDto> getRozvrhUcebne(Long ucebnaId){
+        List<RozvrhDto> ret = new LinkedList<>();
+        for(RozvrhEntity r1 : rozvrhRepository.findAll()){
+            RozvrhDto r2 = mapToRozvrhDto(r1);
+            if(r2.getUcebnaId() == ucebnaId)
+                ret.add(r2);
+        }
+        return ret;
+    }
+    //funkcia vráti zoznam všetkých blokov v rozvrhu pre učiteľa, ktorého id je zadané ako parameter funkcie
+    @Transactional
+    public List<RozvrhDto> getRozvrUcitela(int ucitelId){
+        List<RozvrhDto> ret = new LinkedList<>();
+        for(RozvrhEntity r1 : rozvrhRepository.findAll()){
+            RozvrhDto r2 = mapToRozvrhDto(r1);
+            if(r2.getUcitelId() == ucitelId)
+                ret.add(r2);
+        }
+        return ret;
+    }
+    //funkcia vráti zoznam všetkých blokov v rozvrhu pre predmet, ktorého id je zadané ako parameter funkcie
+    @Transactional
+    public List<RozvrhDto> getRozvrhpredmetu(int predmetId){
+        List<RozvrhDto> ret = new LinkedList<>();
+        for(RozvrhEntity r1 : rozvrhRepository.findAll()){
+            RozvrhDto r2 = mapToRozvrhDto(r1);
+            if(r2.getPredmetId() == predmetId)
+                ret.add(r2);
+        }
+        return ret;
+    }
+    //funkcia vráti zoznam všetkých blokov v rozvrhu pre predmet, ktorého id je zadané ako parameter funkcie
+    @Transactional
+    public List<RozvrhDto> getRozvrhTriedy(String trieda){
+        List<RozvrhDto> ret = new LinkedList<>();
+        for(RozvrhEntity r1 : rozvrhRepository.findAll()){
+            RozvrhDto r2 = mapToRozvrhDto(r1);
+            if(r2.getTrieda() == trieda)
+                ret.add(r2);
+        }
+        return ret;
+    }
+*/
+    //kontrola, či učiteľ, učebňa alebo trieda v danom čase a daný deň už nie sú obsadené, ak sú tak throw new Runtimeexception
+    //funkcia sa bude volať pri create alebo update
+    public void kontrolaRozvrhu(RozvrhDto rozvrhDto){
+        if(!(rozvrhDto.kontrolaStartEnd()))
+            throw new RuntimeException("zle zadaný čas");
+        List<RozvrhDto> ret = getRozvrhDna(rozvrhDto.getDen());
+        for(RozvrhDto r1 : ret) {
+            if (r1.getUcitelId() == rozvrhDto.getUcitelId()) {
+                if (!r1.kontrolaCasu(rozvrhDto.getStart(), rozvrhDto.getFinish()))
+                    throw new RuntimeException("Učiteľ je v danom čase obsadený");
+            }
+            if (r1.getUcebnaId() == rozvrhDto.getUcebnaId()) {
+                if (!r1.kontrolaCasu(rozvrhDto.getStart(), rozvrhDto.getFinish()))
+                    throw new RuntimeException("Učebňa je v danom čase obsadená");
+            }
+            if (r1.getTrieda() == rozvrhDto.getTrieda()) {
+                if (!r1.kontrolaCasu(rozvrhDto.getStart(), rozvrhDto.getFinish()))
+                    throw new RuntimeException("Trieda v danom čase má nejakú hodinu");
+            }
+
+        }
+    }
+
 }

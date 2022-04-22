@@ -24,7 +24,8 @@ public class RozvrhEntity {
     @ManyToOne
     private UcebnaEntity ucebna;
 
-    private Den den;
+    private int den;
+    private String trieda;
     private LocalTime start;
     private LocalTime finish;
 
@@ -36,11 +37,19 @@ public class RozvrhEntity {
         this.id = id;
     }
 
-    public Den getDen() {
+    public String getTrieda() {
+        return trieda;
+    }
+
+    public void setTrieda(String trieda) {
+        this.trieda = trieda;
+    }
+
+    public int getDen() {
         return den;
     }
 
-    public void setDen(Den den) {
+    public void setDen(int den) {
         this.den = den;
     }
 
