@@ -3,6 +3,7 @@ package com.example.Rozvrh.Timeblock;
 import com.example.Rozvrh.Group.Group;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class TimeblockDto {
     public Long id;
@@ -15,22 +16,10 @@ public class TimeblockDto {
     private String classroom;
     private int day;
     private String group;
-    private LocalTime start;
-    private LocalTime finish;
+    private String start;
+    private String finish;
 
-    public boolean StartFinishCheck(){
-        if(this.start.isAfter(this.finish))
-            return false;
-        return true;
-    }
 
-    public boolean TimeCheck(LocalTime start, LocalTime finish){
-        if(this.finish.isBefore(start))
-            return true;
-        if(this.start.isAfter(finish))
-            return true;
-        return false;
-    }
 
     public Long getGroupId() {
         return groupId;
@@ -100,11 +89,11 @@ public class TimeblockDto {
         this.classroom = classroom;
     }
 
-    public void setStart(LocalTime start) {
+    public void setStart(String start) {
         this.start = start;
     }
 
-    public void setFinish(LocalTime finish) {
+    public void setFinish(String finish) {
         this.finish = finish;
     }
 
@@ -120,11 +109,11 @@ public class TimeblockDto {
         return classroom;
     }
 
-    public LocalTime getStart() {
+    public String getStart() {
         return start;
     }
 
-    public LocalTime getFinish() {
+    public String getFinish() {
         return finish;
     }
 }
