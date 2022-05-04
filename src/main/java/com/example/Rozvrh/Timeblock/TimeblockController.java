@@ -13,12 +13,12 @@ public class TimeblockController {
         this.timeblockService = timeblockService;
     }
     @PostMapping
-    public Long createTimeblock(@RequestBody TimeblockDto timeblockDto){
+    public String createTimeblock(@RequestBody TimeblockDto timeblockDto){
         return timeblockService.createTimeblock(timeblockDto);
     }
     @GetMapping
-    public List<TimeblockDto> getTimeblocks(){
-        return timeblockService.getTimeblocks();
+    public List<TimeblockDto> getTimeblocks(@RequestParam(required = false)String name, @RequestParam(required = false)String type){
+        return timeblockService.getTimeblocks(name, type);
     }
     @GetMapping("/{timeblockId}")
     public TimeblockDto getTimeblock(@PathVariable Long timeblockId){
@@ -30,8 +30,8 @@ public class TimeblockController {
         return timeblockService.getRozvrhOfTheDay(dayId);
     }*/
     @PutMapping("/{timeblockId}")
-    public void updateTimeblock(@PathVariable Long timeblockId, @RequestBody TimeblockDto timeblockDto){
-        timeblockService.updateTimeblock(timeblockDto,timeblockId);
+    public String updateTimeblock(@PathVariable Long timeblockId, @RequestBody TimeblockDto timeblockDto){
+        return timeblockService.updateTimeblock(timeblockDto,timeblockId);
     }
     @DeleteMapping("/{timeblockId}")
     public void deleteTimeblock(@PathVariable Long timeblockId){

@@ -1,10 +1,13 @@
 package com.example.Rozvrh.Timeblock;
 
 import com.example.Rozvrh.Group.Group;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class TimeblockDto {
+    @JsonProperty("id")
     public Long id;
     private Long subjectId;
     private Long teacherId;
@@ -14,23 +17,12 @@ public class TimeblockDto {
     private String teacher;
     private String classroom;
     private int day;
+    @JsonProperty("group")
     private String group;
-    private LocalTime start;
-    private LocalTime finish;
+    private String start;
+    private String finish;
 
-    public boolean StartFinishCheck(){
-        if(this.start.isAfter(this.finish))
-            return false;
-        return true;
-    }
 
-    public boolean TimeCheck(LocalTime start, LocalTime finish){
-        if(this.finish.isBefore(start))
-            return true;
-        if(this.start.isAfter(finish))
-            return true;
-        return false;
-    }
 
     public Long getGroupId() {
         return groupId;
@@ -43,7 +35,7 @@ public class TimeblockDto {
     public String getGroup() {
         return group;
     }
-
+    @JsonProperty("group")
     public void setGroup(String group) {
         this.group = group;
     }
@@ -100,11 +92,11 @@ public class TimeblockDto {
         this.classroom = classroom;
     }
 
-    public void setStart(LocalTime start) {
+    public void setStart(String start) {
         this.start = start;
     }
 
-    public void setFinish(LocalTime finish) {
+    public void setFinish(String finish) {
         this.finish = finish;
     }
 
@@ -120,11 +112,11 @@ public class TimeblockDto {
         return classroom;
     }
 
-    public LocalTime getStart() {
+    public String getStart() {
         return start;
     }
 
-    public LocalTime getFinish() {
+    public String getFinish() {
         return finish;
     }
 }
