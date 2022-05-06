@@ -1,4 +1,4 @@
-package com.example.Rozvrh.Timeblock;
+package com.example.Rozvrh.Timeblock.service;
 
 import com.example.Rozvrh.Group.Group;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,7 +7,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class TimeblockDto {
-    @JsonProperty("id")
     public Long id;
     private Long subjectId;
     private Long teacherId;
@@ -17,7 +16,6 @@ public class TimeblockDto {
     private String teacher;
     private String classroom;
     private int day;
-    @JsonProperty("group")
     private String group;
     private String start;
     private String finish;
@@ -35,7 +33,6 @@ public class TimeblockDto {
     public String getGroup() {
         return group;
     }
-    @JsonProperty("group")
     public void setGroup(String group) {
         this.group = group;
     }

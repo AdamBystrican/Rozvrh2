@@ -1,4 +1,4 @@
-package com.example.Rozvrh.Timeblock;
+package com.example.Rozvrh.Timeblock.service;
 
 import com.example.Rozvrh.Group.GroupEntity;
 import com.example.Rozvrh.Group.GroupRepository;
@@ -8,11 +8,12 @@ import com.example.Rozvrh.Classroom.ClassroomEntity;
 import com.example.Rozvrh.Classroom.ClassroomRepository;
 import com.example.Rozvrh.Teacher.TeacherEntity;
 import com.example.Rozvrh.Teacher.TeacherRepository;
+import com.example.Rozvrh.Timeblock.TimeblockEntity;
+import com.example.Rozvrh.Timeblock.TimeblockRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -51,7 +52,7 @@ public class TimeblockService {
 
         return timeblockDto;
     }
-
+    /*
     @Transactional
     public String createTimeblock(TimeblockDto timeblockDto){
         //kontrola, či je zadaný čas správne, a či učiteľ, trieda, alebo učebňa nie sú v danom čase obsadené
@@ -88,6 +89,41 @@ public class TimeblockService {
 
         this.timeblockRepository.save(tbe);
         return tbe.getId().toString();
+    }*/
+
+    @Transactional
+    public String createTimeblock(TimeblockCreateDto timeblockCreateDto){
+        //kontrola, či je zadaný čas správne, a či učiteľ, trieda, alebo učebňa nie sú v danom čase obsadené
+        String errorMessage = TimeblockCheck(timeblockCreateDto);
+        if(errorMessage != null)
+            return errorMessage;
+        TimeblockEntity tbe = new TimeblockEntity();
+        Optional<TeacherEntity> teacherById = teacherRepository.findById(timeblockCreateDto.getTeacher().getId());
+        if (teacherById.isPresent()) {
+            tbe.setTeacher(teacherById.get());
+        }
+
+        Optional<ClassroomEntity> ClassroomById = classroomRepository.findById(timeblockCreateDto.getClassroom().getId());
+        if (ClassroomById.isPresent()) {
+            tbe.setClassroom(ClassroomById.get());
+        }
+
+        Optional<SubjectEntity> subjectById = subjectRepository.findById(timeblockCreateDto.getSubject().getId());
+        if (subjectById.isPresent()) {
+            tbe.setSubject(subjectById.get());
+        }
+
+        Optional<GroupEntity> groupById = groupRepository.findById(timeblockCreateDto.getGroup().getId());
+        if (groupById.isPresent()) {
+            tbe.setGroup(groupById.get());
+        }
+        tbe.setDay(timeblockCreateDto.getDay());
+        //dto obsahuje casove premenne ako string preto pri pridavani entity je potrebne zmenit string na LocalTime
+        tbe.setStart(LocalTime.parse(timeblockCreateDto.getStart()));
+        tbe.setFinish(LocalTime.parse(timeblockCreateDto.getFinish()));
+
+        this.timeblockRepository.save(tbe);
+        return tbe.getId().toString();
     }
 
     @Transactional
@@ -99,6 +135,7 @@ public class TimeblockService {
         }
         return null;
     }
+
 
     @Transactional
     public List<TimeblockDto> getTimeblocks(String name, String type){
@@ -126,41 +163,38 @@ public class TimeblockService {
         return ret;
     }
     @Transactional
-    public String updateTimeblock(TimeblockDto timeblockDto, Long timeblockId){
+    public String updateTimeblock(TimeblockCreateDto timeblockCreateDto, Long timeblockId){
         //kontrola, či je zadaný čas správne, a či učiteľ, trieda, alebo učebňa nie sú v danom čase obsadené
-        String errorMessage = TimeblockCheck(timeblockDto);
+        String errorMessage = TimeblockCheck(timeblockCreateDto);
         if(errorMessage != null)
             return errorMessage;
         Optional<TimeblockEntity> tbe = timeblockRepository.findById(timeblockId);
-        if(tbe.isPresent()){
-            Optional<TeacherEntity> teacherById = teacherRepository.findById(timeblockDto.getTeacherId());
-            if(!teacherById.isPresent()){
-                return "zadané id pre učiteľa neexistuje";
-            }
-            Optional<ClassroomEntity> classroomById = classroomRepository.findById(timeblockDto.getClassroomId());
-            if(!classroomById.isPresent()){
-                return "zadané id pre Učebňu neexistuje";
-            }
-            Optional<SubjectEntity> subjectById = subjectRepository.findById(timeblockDto.getSubjectId());
-            if(!subjectById.isPresent()){
-                return "zadané id pre predmet neexistuje";
-            }
-            Optional<GroupEntity> groupById = groupRepository.findById(timeblockDto.getGroupId());
-            if (!groupById.isPresent()) {
-                return "zadané id pre triedu neexistuje";
+        if(tbe.isPresent()) {
+            Optional<TeacherEntity> teacherById = teacherRepository.findById(timeblockCreateDto.getTeacher().getId());
+            if (teacherById.isPresent()) {
+                tbe.get().setTeacher(teacherById.get());
             }
 
-            tbe.get().setTeacher(teacherById.get());
-            tbe.get().setClassroom(classroomById.get());
-            tbe.get().setDay(timeblockDto.getDay());
-            tbe.get().setSubject(subjectById.get());
-            tbe.get().setGroup(groupById.get());
+            Optional<ClassroomEntity> ClassroomById = classroomRepository.findById(timeblockCreateDto.getClassroom().getId());
+            if (ClassroomById.isPresent()) {
+                tbe.get().setClassroom(ClassroomById.get());
+            }
 
+            Optional<SubjectEntity> subjectById = subjectRepository.findById(timeblockCreateDto.getSubject().getId());
+            if (subjectById.isPresent()) {
+                tbe.get().setSubject(subjectById.get());
+            }
+
+            Optional<GroupEntity> groupById = groupRepository.findById(timeblockCreateDto.getGroup().getId());
+            if (groupById.isPresent()) {
+                tbe.get().setGroup(groupById.get());
+            }
+            tbe.get().setDay(timeblockCreateDto.getDay());
             //dto obsahuje casove premenne ako string preto pri pridavani entity je potrebne zmenit string na LocalTime
-            tbe.get().setStart(LocalTime.parse(timeblockDto.getStart()));
-            tbe.get().setFinish(LocalTime.parse(timeblockDto.getFinish()));
+            tbe.get().setStart(LocalTime.parse(timeblockCreateDto.getStart()));
+            tbe.get().setFinish(LocalTime.parse(timeblockCreateDto.getFinish()));
             return tbe.get().getId().toString();
-        }else return "Zle id";
+        } else return "Zle id";
 
     }
     @Transactional
@@ -183,18 +217,18 @@ public class TimeblockService {
 
 
     //kontrola, ci cas zaciatku hodiny nie je az po jej konci
-    public boolean StartFinishCheck(TimeblockDto timeblockDto){
-        LocalTime st = LocalTime.parse(timeblockDto.getStart());
-        LocalTime fin = LocalTime.parse(timeblockDto.getFinish());
+    public boolean StartFinishCheck(TimeblockCreateDto timeblockCreateDto){
+        LocalTime st = LocalTime.parse(timeblockCreateDto.getStart());
+        LocalTime fin = LocalTime.parse(timeblockCreateDto.getFinish());
         if(st.isAfter(fin))
             return false;
         return true;
     }
 
     //kontrola, ci hodina, ktoru pridavame nie je v kolizii, s nejakou inou hodinou, ktoru posielame ako druhy parameter
-    public boolean TimeCheck(TimeblockDto timeblockDto, TimeblockDto checktimeblockDto){
-        LocalTime st = LocalTime.parse(timeblockDto.getStart());
-        LocalTime fin = LocalTime.parse(timeblockDto.getFinish());
+    public boolean TimeCheck(TimeblockCreateDto timeblockCreateDto, TimeblockDto checktimeblockDto){
+        LocalTime st = LocalTime.parse(timeblockCreateDto.getStart());
+        LocalTime fin = LocalTime.parse(timeblockCreateDto.getFinish());
         LocalTime checkSt = LocalTime.parse(checktimeblockDto.getStart());
         LocalTime checFin = LocalTime.parse(checktimeblockDto.getFinish());
 
@@ -209,21 +243,21 @@ public class TimeblockService {
     }
     //kontrola, či učiteľ, učebňa alebo trieda v danom čase a daný deň už nie sú obsadené, ak sú tak throw new Runtimeexception
     //funkcia sa bude volať pri create alebo update
-    public String TimeblockCheck(TimeblockDto timeblockDto){
-        if(!StartFinishCheck(timeblockDto))
+    public String TimeblockCheck(TimeblockCreateDto timeblockCreateDto){
+        if(!StartFinishCheck(timeblockCreateDto))
             return "zle zadaný čas";
-        List<TimeblockDto> ret = getTimeblockOfTheDay(timeblockDto.getDay());
+        List<TimeblockDto> ret = getTimeblockOfTheDay(timeblockCreateDto.getDay());
         for(TimeblockDto r1 : ret) {
-            if (r1.getTeacherId() == timeblockDto.getTeacherId()) {
-                if (!TimeCheck(timeblockDto,r1))
+            if (r1.getTeacherId() == timeblockCreateDto.getTeacher().getId()) {
+                if (!TimeCheck(timeblockCreateDto,r1))
                     return"Učiteľ je v danom čase obsadený";
             }
-            if (r1.getClassroomId() == timeblockDto.getClassroomId()) {
-                if (!TimeCheck(timeblockDto,r1))
+            if (r1.getClassroomId() == timeblockCreateDto.getClassroom().getId()) {
+                if (!TimeCheck(timeblockCreateDto,r1))
                     return "Učebňa je v danom čase obsadená";
             }
-            if (r1.getGroupId()  == timeblockDto.getGroupId()) {
-                if (!TimeCheck(timeblockDto,r1))
+            if (r1.getGroupId()  == timeblockCreateDto.getGroup().getId()) {
+                if (!TimeCheck(timeblockCreateDto,r1))
                     return "Trieda v danom čase má nejakú hodinu";
             }
         }
