@@ -164,12 +164,14 @@ public class TimeblockService {
     }
     @Transactional
     public String updateTimeblock(TimeblockCreateDto timeblockCreateDto, Long timeblockId){
-        //kontrola, či je zadaný čas správne, a či učiteľ, trieda, alebo učebňa nie sú v danom čase obsadené
-        String errorMessage = TimeblockCheck(timeblockCreateDto);
-        if(errorMessage != null)
-            return errorMessage;
+
         Optional<TimeblockEntity> tbe = timeblockRepository.findById(timeblockId);
         if(tbe.isPresent()) {
+            timeblockCreateDto.setId(timeblockId);
+            //kontrola, či je zadaný čas správne, a či učiteľ, trieda, alebo učebňa nie sú v danom čase obsadené
+            String errorMessage = TimeblockCheck(timeblockCreateDto);
+            if(errorMessage != null)
+                return errorMessage;
             Optional<TeacherEntity> teacherById = teacherRepository.findById(timeblockCreateDto.getTeacher().getId());
             if (teacherById.isPresent()) {
                 tbe.get().setTeacher(teacherById.get());
@@ -247,19 +249,23 @@ public class TimeblockService {
         if(!StartFinishCheck(timeblockCreateDto))
             return "zle zadaný čas";
         List<TimeblockDto> ret = getTimeblockOfTheDay(timeblockCreateDto.getDay());
+
         for(TimeblockDto r1 : ret) {
-            if (r1.getTeacherId() == timeblockCreateDto.getTeacher().getId()) {
-                if (!TimeCheck(timeblockCreateDto,r1))
-                    return"Učiteľ je v danom čase obsadený";
+            if(r1.getId() != timeblockCreateDto.getId()){
+                if (r1.getTeacherId() == timeblockCreateDto.getTeacher().getId()) {
+                    if (!TimeCheck(timeblockCreateDto,r1))
+                        return"Učiteľ je v danom čase obsadený";
+                }
+                if (r1.getClassroomId() == timeblockCreateDto.getClassroom().getId()) {
+                    if (!TimeCheck(timeblockCreateDto,r1))
+                        return "Učebňa je v danom čase obsadená";
+                }
+                if (r1.getGroupId()  == timeblockCreateDto.getGroup().getId()) {
+                    if (!TimeCheck(timeblockCreateDto,r1))
+                        return "Trieda v danom čase má nejakú hodinu";
+                }
             }
-            if (r1.getClassroomId() == timeblockCreateDto.getClassroom().getId()) {
-                if (!TimeCheck(timeblockCreateDto,r1))
-                    return "Učebňa je v danom čase obsadená";
-            }
-            if (r1.getGroupId()  == timeblockCreateDto.getGroup().getId()) {
-                if (!TimeCheck(timeblockCreateDto,r1))
-                    return "Trieda v danom čase má nejakú hodinu";
-            }
+
         }
         return null;
     }
