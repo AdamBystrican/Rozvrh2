@@ -155,6 +155,9 @@ public class TimeblockService {
                 if(type.equals("classroom") && name.equals(tb2.getClassroom())){
                     ret.add(tb2);
                 }
+                if(type.equals("subject") && name.equals(tb2.getSubject())){
+                    ret.add(tb2);
+                }
             }
 
 
