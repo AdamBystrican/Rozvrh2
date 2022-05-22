@@ -1,5 +1,6 @@
 package com.example.Rozvrh.Teacher;
 
+import com.example.Rozvrh.Group.GroupEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -25,13 +26,17 @@ public class TeacherService {
     }
 
     @Transactional
-    public Long createTeacher(TeacherDto teacherDto){
+    public String createTeacher(TeacherDto teacherDto){
+        for(TeacherEntity t1 : teacherRepository.findAll()){
+            if(t1.getFullName().equals(teacherDto.getFirstName() + " " + teacherDto.getLastName()))
+                return "Teacher with this name already exists";
+        }
         TeacherEntity te = new TeacherEntity();
         te.setFirstName(teacherDto.getFirstName());
         te.setLastName(teacherDto.getLastName());
         te.setContact(teacherDto.getContact());
         this.teacherRepository.save(te);
-        return te.getId();
+        return te.getId().toString();
     }
 
     @Transactional
@@ -54,13 +59,19 @@ public class TeacherService {
     }
 
     @Transactional
-    public void updateTeacher(Long teacherId, TeacherDto teacherDto){
+    public String updateTeacher(Long teacherId, TeacherDto teacherDto){
+        for(TeacherEntity t1 : teacherRepository.findAll()){
+            if(t1.getFullName().equals(teacherDto.getFirstName() + " " + teacherDto.getLastName()))
+                return "Teacher with this name already exists";
+        }
         Optional<TeacherEntity> byId = teacherRepository.findById(teacherId);
         if(byId.isPresent()){
             byId.get().setFirstName(teacherDto.getFirstName());
             byId.get().setLastName(teacherDto.getLastName());
             byId.get().setContact(teacherDto.getContact());
+            return byId.get().toString();
         }
+        return "Wrong Id";
     }
 
     @Transactional

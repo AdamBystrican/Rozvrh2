@@ -1,5 +1,6 @@
 package com.example.Rozvrh.Classroom;
 
+import com.example.Rozvrh.Group.GroupEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -25,13 +26,17 @@ public class ClassroomService {
     }
 
     @Transactional
-    public Long createClassroom(ClassroomDto classroomDto){
+    public String createClassroom(ClassroomDto classroomDto){
+        for(ClassroomEntity c1 : classroomRepository.findAll()){
+            if(c1.getName().equals(classroomDto.getName()))
+                return "Classroom with this name already exists";
+        }
         ClassroomEntity ue = new ClassroomEntity();
         ue.setName(classroomDto.getName());
         ue.setComputersProviding(classroomDto.isComputersProviding());
         ue.setAddress(classroomDto.getAddress());
         classroomRepository.save(ue);
-        return ue.getId();
+        return ue.getId().toString();
     }
     @Transactional
     public ClassroomDto getClassroom(Long classroomId){
@@ -53,13 +58,19 @@ public class ClassroomService {
     }
 
     @Transactional
-    public void updateClassroom(Long classroomId, ClassroomDto classroomDto){
+    public String updateClassroom(Long classroomId, ClassroomDto classroomDto){
+        for(ClassroomEntity c1 : classroomRepository.findAll()){
+            if(c1.getName().equals(classroomDto.getName()))
+                return "Classroom with this name already exists";
+        }
         Optional<ClassroomEntity> byId = classroomRepository.findById(classroomId);
         if(byId.isPresent()){
             byId.get().setName(classroomDto.getName());
             byId.get().setComputersProviding(classroomDto.isComputersProviding());
             byId.get().setAddress(classroomDto.getAddress());
+            return byId.get().getId().toString();
         }
+        return "Wrong Id";
     }
 
     @Transactional

@@ -13,7 +13,7 @@ public class ClassroomController {
         this.classroomService = classroomService;
     }
     @PostMapping
-    public Long createClassroom(@RequestBody ClassroomDto classroomDto){
+    public String createClassroom(@RequestBody ClassroomDto classroomDto){
         return classroomService.createClassroom(classroomDto);
     }
     @GetMapping
@@ -25,8 +25,8 @@ public class ClassroomController {
         return classroomService.getClassroom(classroomId);
     }
     @PutMapping("/{classroomId}")
-    public void updateClassroom(@PathVariable Long classroomId, @RequestBody ClassroomDto classroomDto){
-        classroomService.updateClassroom(classroomId, classroomDto);
+    public String updateClassroom(@PathVariable Long classroomId, @RequestBody ClassroomDto classroomDto){
+        return classroomService.updateClassroom(classroomId, classroomDto);
     }
     @DeleteMapping("/{classroomId}")
     public void deleteClassroom(@PathVariable Long classroomId){

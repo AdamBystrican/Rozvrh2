@@ -250,22 +250,22 @@ public class TimeblockService {
     //funkcia sa bude volať pri create alebo update
     public String TimeblockCheck(TimeblockCreateDto timeblockCreateDto){
         if(!StartFinishCheck(timeblockCreateDto))
-            return "zle zadaný čas";
+            return "Wrong time";
         List<TimeblockDto> ret = getTimeblockOfTheDay(timeblockCreateDto.getDay());
 
         for(TimeblockDto r1 : ret) {
             if(r1.getId() != timeblockCreateDto.getId()){
                 if (r1.getTeacherId() == timeblockCreateDto.getTeacher().getId()) {
                     if (!TimeCheck(timeblockCreateDto,r1))
-                        return"Učiteľ je v danom čase obsadený";
+                        return"Teacher is busy at this time";
                 }
                 if (r1.getClassroomId() == timeblockCreateDto.getClassroom().getId()) {
                     if (!TimeCheck(timeblockCreateDto,r1))
-                        return "Učebňa je v danom čase obsadená";
+                        return "Classroom is busy at this time";
                 }
                 if (r1.getGroupId()  == timeblockCreateDto.getGroup().getId()) {
                     if (!TimeCheck(timeblockCreateDto,r1))
-                        return "Trieda v danom čase má nejakú hodinu";
+                        return "Class is busy at this time";
                 }
             }
 

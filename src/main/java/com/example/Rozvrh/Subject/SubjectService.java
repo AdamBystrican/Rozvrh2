@@ -1,5 +1,6 @@
 package com.example.Rozvrh.Subject;
 
+import com.example.Rozvrh.Group.GroupEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -26,13 +27,17 @@ public class SubjectService {
     }
 
     @Transactional
-    public Long createSubject(SubjectDto subjectDto){
+    public String createSubject(SubjectDto subjectDto){
+        for(SubjectEntity s1 : subjectRepository.findAll()){
+            if(s1.getName().equals(subjectDto.getName()))
+                return "Subject with this name already exists";
+        }
         SubjectEntity se = new SubjectEntity();
         se.setName(subjectDto.getName());
         se.setComputersRequired(subjectDto.isComputersRequired());
         se.setType(subjectDto.getType());
         this.subjectRepository.save(se);
-        return se.getId();
+        return se.getId().toString();
     }
 
     @Transactional
@@ -55,13 +60,19 @@ public class SubjectService {
    }
 
    @Transactional
-   public void updateSubject(Long subjectId, SubjectDto subjectDto){
+   public String updateSubject(Long subjectId, SubjectDto subjectDto){
+       for(SubjectEntity s1 : subjectRepository.findAll()){
+           if(s1.getName().equals(subjectDto.getName()))
+               return "Subject with this name already exists";
+       }
         Optional<SubjectEntity> byId = subjectRepository.findById(subjectId);
         if(byId.isPresent()){
             byId.get().setName(subjectDto.getName());
             byId.get().setComputersRequired(subjectDto.isComputersRequired());
             byId.get().setType(subjectDto.getType());
+            return byId.get().getId().toString();
         }
+        return "Wrong Id";
    }
     @Transactional
     public void deleteSubject(Long subjectId){

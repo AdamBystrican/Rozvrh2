@@ -14,7 +14,7 @@ public class TeacherController {
     }
 
     @PostMapping
-    public Long createTeacher(@RequestBody TeacherDto teacherDto){
+    public String createTeacher(@RequestBody TeacherDto teacherDto){
         return teacherService.createTeacher(teacherDto);
     }
     @GetMapping("/{teacherId}")
@@ -26,8 +26,8 @@ public class TeacherController {
         return teacherService.getTeachers(teacherName);
     }
     @PutMapping("/{teacherId}")
-    public void updateTeacher(@PathVariable Long teacherId, @RequestBody TeacherDto teacherDto){
-        teacherService.updateTeacher(teacherId, teacherDto);
+    public String updateTeacher(@PathVariable Long teacherId, @RequestBody TeacherDto teacherDto){
+        return teacherService.updateTeacher(teacherId, teacherDto);
     }
     @DeleteMapping("/{teacherId}")
     public void deleteTeacher(@PathVariable Long teacherId){

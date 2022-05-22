@@ -14,7 +14,7 @@ public class SubjectController {
     }
 
     @PostMapping
-    public Long createSubject(@RequestBody SubjectDto subjectDto){
+    public String createSubject(@RequestBody SubjectDto subjectDto){
         return subjectService.createSubject(subjectDto);
     }
     @GetMapping
@@ -26,8 +26,8 @@ public class SubjectController {
         return subjectService.getSubject(subjectId);
     }
     @PutMapping("/{subjectId}")
-    public void updateSubject(@PathVariable Long subjectId, @RequestBody SubjectDto subjectDto){
-        subjectService.updateSubject(subjectId,subjectDto);
+    public String updateSubject(@PathVariable Long subjectId, @RequestBody SubjectDto subjectDto){
+        return subjectService.updateSubject(subjectId,subjectDto);
     }
     @DeleteMapping("/{subjectId}")
     public void deleteSubject(@PathVariable Long subjectId){

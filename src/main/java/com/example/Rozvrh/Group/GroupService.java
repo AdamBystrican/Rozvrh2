@@ -23,11 +23,16 @@ public class GroupService {
     }
 
     @Transactional
-    public Long createGroup(GroupDto groupDto){
+    public String createGroup(GroupDto groupDto){
+        List<GroupDto> groups = new LinkedList<>();
+        for(GroupEntity g1 : groupRepository.findAll()){
+            if(g1.getName().equals(groupDto.getName()))
+                return "Group with this name already exists";
+        }
         GroupEntity ge = new GroupEntity();
         ge.setName(groupDto.getName());
         this.groupRepository.save(ge);
-        return ge.getId();
+        return ge.getId().toString();
     }
 
    @Transactional
@@ -50,11 +55,17 @@ public class GroupService {
     }
 
     @Transactional
-    public void updateGroup(Long groupId, GroupDto groupDto){
+    public String updateGroup(Long groupId, GroupDto groupDto){
+        for(GroupEntity g1 : groupRepository.findAll()){
+            if(g1.getName().equals(groupDto.getName()))
+                return "Group with this name already exists";
+        }
         Optional<GroupEntity> byId = this.groupRepository.findById(groupId);
         if(byId.isPresent()){
             byId.get().setName(groupDto.getName());
+            return byId.get().getId().toString();
         }
+        return "Wrong Id";
     }
 
     @Transactional

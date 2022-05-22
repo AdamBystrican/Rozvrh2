@@ -14,7 +14,7 @@ public class GroupController {
     }
 
     @PostMapping
-    public Long createGroup(@RequestBody GroupDto groupDto){
+    public String createGroup(@RequestBody GroupDto groupDto){
         return groupService.createGroup(groupDto);
     }
 
@@ -29,8 +29,8 @@ public class GroupController {
     }
 
     @PutMapping("/{groupId}")
-    public void updateGroup(@PathVariable Long groupId,@RequestBody GroupDto groupDto){
-        groupService.updateGroup(groupId, groupDto);
+    public String updateGroup(@PathVariable Long groupId,@RequestBody GroupDto groupDto){
+        return groupService.updateGroup(groupId, groupDto);
     }
 
     @DeleteMapping("/{groupId}")
