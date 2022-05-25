@@ -56,11 +56,11 @@ public class ClassroomService {
         }
         return classrooms;
     }
-
+    //neporovnava sa sam so sebou
     @Transactional
     public String updateClassroom(Long classroomId, ClassroomDto classroomDto){
         for(ClassroomEntity c1 : classroomRepository.findAll()){
-            if(c1.getName().equals(classroomDto.getName()))
+            if(c1.getName().equals(classroomDto.getName()) && c1.getId() != classroomId)
                 return "Classroom with this name already exists";
         }
         Optional<ClassroomEntity> byId = classroomRepository.findById(classroomId);

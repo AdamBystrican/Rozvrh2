@@ -58,11 +58,11 @@ public class SubjectService {
        }
        return subjects;
    }
-
+    //neporovnava sa sam so sebou
    @Transactional
    public String updateSubject(Long subjectId, SubjectDto subjectDto){
        for(SubjectEntity s1 : subjectRepository.findAll()){
-           if(s1.getName().equals(subjectDto.getName()))
+           if(s1.getName().equals(subjectDto.getName()) && s1.getId() != subjectId)
                return "Subject with this name already exists";
        }
         Optional<SubjectEntity> byId = subjectRepository.findById(subjectId);

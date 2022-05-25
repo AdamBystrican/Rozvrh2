@@ -57,11 +57,11 @@ public class TeacherService {
         }
         return teachers;
     }
-
+    //neporovnava sa sam so sebou
     @Transactional
     public String updateTeacher(Long teacherId, TeacherDto teacherDto){
         for(TeacherEntity t1 : teacherRepository.findAll()){
-            if(t1.getFullName().equals(teacherDto.getFirstName() + " " + teacherDto.getLastName()))
+            if(t1.getFullName().equals(teacherDto.getFirstName() + " " + teacherDto.getLastName()) && t1.getId() != teacherId)
                 return "Teacher with this name already exists";
         }
         Optional<TeacherEntity> byId = teacherRepository.findById(teacherId);

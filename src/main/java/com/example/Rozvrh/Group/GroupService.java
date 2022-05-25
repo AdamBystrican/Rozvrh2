@@ -53,11 +53,11 @@ public class GroupService {
         }
         return groups;
     }
-
+    //neporovnava sa sam so sebou
     @Transactional
     public String updateGroup(Long groupId, GroupDto groupDto){
         for(GroupEntity g1 : groupRepository.findAll()){
-            if(g1.getName().equals(groupDto.getName()))
+            if(g1.getName().equals(groupDto.getName()) && g1.getId() != groupId)
                 return "Group with this name already exists";
         }
         Optional<GroupEntity> byId = this.groupRepository.findById(groupId);

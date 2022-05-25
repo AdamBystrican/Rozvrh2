@@ -254,6 +254,7 @@ public class TimeblockService {
         List<TimeblockDto> ret = getTimeblockOfTheDay(timeblockCreateDto.getDay());
 
         for(TimeblockDto r1 : ret) {
+            //neporovnava sa sam so sebou
             if(r1.getId() != timeblockCreateDto.getId()){
                 if (r1.getTeacherId() == timeblockCreateDto.getTeacher().getId()) {
                     if (!TimeCheck(timeblockCreateDto,r1))
